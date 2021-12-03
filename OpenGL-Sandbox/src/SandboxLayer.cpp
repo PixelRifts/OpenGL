@@ -1,10 +1,11 @@
 #include "SandboxLayer.h"
 
-using namespace GLCore;
-using namespace GLCore::Utils;
+#include <GLCore.h>
+#include <GLCoreUtils.h>
 
 SandboxLayer::SandboxLayer()
 {
+	m_time = 0;
 }
 
 SandboxLayer::~SandboxLayer()
@@ -13,10 +14,10 @@ SandboxLayer::~SandboxLayer()
 
 void SandboxLayer::OnAttach()
 {
-	EnableGLDebugging();
+	GLCore::Utils::EnableGLDebugging();
 
 	// For now gonna use this abstraction
-	m_shader = Shader::FromGLSLTextFiles(
+	m_shader = new OpenGL::Shader(
 		"assets/test.vert.glsl",
 		"assets/test.frag.glsl"
 	);
@@ -61,15 +62,18 @@ void SandboxLayer::OnDetach()
 	delete m_shader;
 }
 
-void SandboxLayer::OnEvent(Event& event)
+void SandboxLayer::OnEvent(GLCore::Event& event)
 {
 	// Events here
 }
 
-void SandboxLayer::OnUpdate(Timestep ts)
+void SandboxLayer::OnUpdate(GLCore::Timestep ts)
 {
+	m_time += ts.GetSeconds() * 1;
+
 	// Render here
-	glUseProgram(m_shader->GetRendererID());
+	m_shader->Bind();
+	m_shader->SetVector4("u_Color", glm::vec4(glm::sin(m_time), glm::cos(m_time), glm::sin(2 * m_time), 1.f));
 	m_vao->Bind();
 
 	// Count is hardcoded here for now

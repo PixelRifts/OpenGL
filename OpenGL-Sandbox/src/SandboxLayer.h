@@ -4,6 +4,7 @@
 #include <GLCoreUtils.h>
 #include "OpenGL/Buffer.h"
 #include "OpenGL/VertexArray.h"
+#include "OpenGL/Shader.h"
 
 class SandboxLayer : public GLCore::Layer
 {
@@ -18,9 +19,9 @@ public:
 	virtual void OnImGuiRender() override;
 
 private:
+	float m_time;
 	OpenGL::VertexArray* m_vao;
 	OpenGL::VertexBuffer* m_buffer;
 	OpenGL::IndexBuffer* m_indexbuffer;
-
-	GLCore::Utils::Shader* m_shader;
+	OpenGL::Shader* m_shader;
 };
