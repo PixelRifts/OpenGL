@@ -6,12 +6,14 @@
 namespace OpenGL {
 	class Shader {
 	public:
+		// Loads two files. One for vertex shader, one for fragment shader
 		Shader(const std::string& vert, const std::string& frag);
 		~Shader();
 
 		void Bind();
 		void Unbind();
 
+		// Setting Uniforms
 		void SetFloat(const std::string& name, float v);
 		void SetVector2(const std::string& name, glm::vec2 v);
 		void SetVector3(const std::string& name, glm::vec3 v);

@@ -4,7 +4,8 @@
 #include <GLCoreUtils.h>
 
 namespace OpenGL {
-	enum Datatype {
+	// Corresponds to a datatype that Shaderds recognise
+	enum class Datatype {
 		Float,   // float
 		Float2,  // vec2
 		Float3,  // vec3

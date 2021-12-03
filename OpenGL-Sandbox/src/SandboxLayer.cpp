@@ -22,6 +22,8 @@ void SandboxLayer::OnAttach()
 		"assets/test.frag.glsl"
 	);
 
+	m_texture = new OpenGL::Texture2D("assets/Smiley.png");
+
 	// Init here
 	m_vao = new OpenGL::VertexArray();
 	m_vao->Bind();
@@ -60,6 +62,7 @@ void SandboxLayer::OnDetach()
 	delete m_buffer;
 	delete m_vao;
 	delete m_shader;
+	delete m_texture;
 }
 
 void SandboxLayer::OnEvent(GLCore::Event& event)
@@ -69,10 +72,12 @@ void SandboxLayer::OnEvent(GLCore::Event& event)
 
 void SandboxLayer::OnUpdate(GLCore::Timestep ts)
 {
-	m_time += ts.GetSeconds() * 1;
+	m_time += ts.GetSeconds();
 
 	// Render here
 	m_shader->Bind();
+	m_texture->Bind(0);
+	m_shader->SetInt("u_Texture", 0);
 	m_shader->SetVector4("u_Color", glm::vec4(glm::sin(m_time), glm::cos(m_time), glm::sin(2 * m_time), 1.f));
 	m_vao->Bind();
 

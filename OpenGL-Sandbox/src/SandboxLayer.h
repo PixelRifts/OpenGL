@@ -5,6 +5,7 @@
 #include "OpenGL/Buffer.h"
 #include "OpenGL/VertexArray.h"
 #include "OpenGL/Shader.h"
+#include "OpenGL/Texture.h"
 
 class SandboxLayer : public GLCore::Layer
 {
@@ -24,4 +25,5 @@ private:
 	OpenGL::VertexBuffer* m_buffer;
 	OpenGL::IndexBuffer* m_indexbuffer;
 	OpenGL::Shader* m_shader;
+	OpenGL::Texture2D* m_texture;
 };
