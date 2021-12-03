@@ -4,7 +4,6 @@ namespace OpenGL {
 	VertexArray::VertexArray()
 	{
 		glGenVertexArrays(1, &m_id);
-		glBindVertexArray(m_id);
 	}
 
 	VertexArray::~VertexArray()
@@ -24,6 +23,7 @@ namespace OpenGL {
 
 	void VertexArray::AddBuffer(VertexBuffer* buffer, int start_index)
 	{
+		glBindVertexArray(m_id);
 		m_buffers.push_back(buffer);
 		uint32_t index = start_index;
 		for (BufferAttribute attrib : buffer->GetIncludedAttributes()) {
@@ -38,5 +38,13 @@ namespace OpenGL {
 			glEnableVertexAttribArray(index);
 			index++;
 		}
+	}
+	
+	void VertexArray::SetIndexBuffer(IndexBuffer* buffer)
+	{
+		m_index_buffer = buffer;
+		// Binding an Index Buffer while a vao is bound connects them
+		glBindVertexArray(m_id);
+		buffer->Bind();
 	}
 }

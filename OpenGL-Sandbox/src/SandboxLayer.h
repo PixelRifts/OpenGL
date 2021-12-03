@@ -20,6 +20,7 @@ public:
 private:
 	OpenGL::VertexArray* m_vao;
 	OpenGL::VertexBuffer* m_buffer;
+	OpenGL::IndexBuffer* m_indexbuffer;
 
 	GLCore::Utils::Shader* m_shader;
 };

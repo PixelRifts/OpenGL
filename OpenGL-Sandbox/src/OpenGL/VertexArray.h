@@ -18,8 +18,11 @@ namespace OpenGL {
 		// Add A Buffer to this vertex array with the starting index start_index.
 		void AddBuffer(VertexBuffer* buffer, int start_index);
 
+		void SetIndexBuffer(IndexBuffer* buffer);
+
 	private:
 		GLuint m_id;
 		std::vector<VertexBuffer*> m_buffers;
+		IndexBuffer* m_index_buffer;
 	};
 }

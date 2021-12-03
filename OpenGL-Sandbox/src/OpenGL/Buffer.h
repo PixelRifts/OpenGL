@@ -65,4 +65,27 @@ namespace OpenGL {
 		uint32_t m_stride = 0;
 		std::vector<BufferAttribute> m_included;
 	};
+
+	class IndexBuffer {
+	public:
+		// Creates the buffer. Doesn't allocate any data
+		IndexBuffer();
+		// Creates the buffer. Allocates data with "size" size
+		IndexBuffer(uint32_t size);
+		~IndexBuffer();
+
+		void Bind();
+		void Unbind();
+
+		// Reallocates data for the buffer
+		void Resize(uint32_t size);
+		// This version of SetData sets the buffer's complete data
+		void SetData(const void* data, uint32_t size);
+		// This version of SetData sets a portion of the buffer's data
+		// Needs to have some data allocated first via the second constructor or Resize
+		void SetData(const void* data, uint32_t size, uint32_t offset);
+
+	private:
+		GLuint m_id;
+	};
 }
