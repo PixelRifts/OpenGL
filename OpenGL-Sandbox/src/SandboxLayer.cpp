@@ -22,8 +22,7 @@ void SandboxLayer::OnAttach()
 	);
 
 	// Init here
-	glGenVertexArrays(1, &m_vao);
-	glBindVertexArray(m_vao);
+	m_vao = new OpenGL::VertexArray();
 
 	m_buffer = new OpenGL::VertexBuffer({
 		{ "pos", OpenGL::Datatype::Float2 },
@@ -41,27 +40,15 @@ void SandboxLayer::OnAttach()
 	m_buffer->SetData(data, sizeof(data));
 	m_buffer->Bind();
 
-	uint32_t index = 0;
-	for (OpenGL::BufferAttribute attrib : m_buffer->GetIncludedAttributes()) {
-		// Culmination of everything in the buffer class
-		glVertexAttribPointer(
-			index,
-			OpenGL::GetElementCount(attrib.Type),
-			OpenGL::GetBaseType(attrib.Type),
-			GL_FALSE,
-			m_buffer->GetStride(),
-			(const void*) attrib.Offset);
-		glEnableVertexAttribArray(index);
-		index++;
-	}
+	m_vao->AddBuffer(m_buffer);
 }
 
 void SandboxLayer::OnDetach()
 {
 	// Shutdown here
-	delete m_shader;
-	glDeleteVertexArrays(1, &m_vao);
 	delete m_buffer;
+	delete m_vao;
+	delete m_shader;
 }
 
 void SandboxLayer::OnEvent(Event& event)
@@ -73,7 +60,7 @@ void SandboxLayer::OnUpdate(Timestep ts)
 {
 	// Render here
 	glUseProgram(m_shader->GetRendererID());
-	glBindVertexArray(m_vao);
+	m_vao->Bind();
 	glDrawArrays(GL_TRIANGLES, 0, 6); // Count is hardcoded here for now
 }
 

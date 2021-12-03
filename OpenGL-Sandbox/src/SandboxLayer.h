@@ -3,6 +3,7 @@
 #include <GLCore.h>
 #include <GLCoreUtils.h>
 #include "OpenGL/Buffer.h"
+#include "OpenGL/VertexArray.h"
 
 class SandboxLayer : public GLCore::Layer
 {
@@ -17,7 +18,8 @@ public:
 	virtual void OnImGuiRender() override;
 
 private:
-	GLuint m_vao;
+	OpenGL::VertexArray* m_vao;
 	OpenGL::VertexBuffer* m_buffer;
+
 	GLCore::Utils::Shader* m_shader;
 };
